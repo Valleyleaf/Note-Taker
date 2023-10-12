@@ -35,7 +35,7 @@ const getNotes = () =>
       'Content-Type': 'application/json'
     }
   });
-
+// This gets the notes.html but currently does not work.
 const saveNote = (note) =>
   fetch('/api/notes', {
     method: 'POST',
