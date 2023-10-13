@@ -1,23 +1,26 @@
 // console.log('hello world')
 
-const express = require('express')
-const app = express()
-const fs = require('fs')
+const express = require('express');
+const app = express();
+const path = require('path');
+const fs = require('fs');
 const PORT = 3001;
 
+app.use(express.static(path.join(__dirname, 'Develop/public')));
 
+app.use(express.json());
+//Above parses JSON request. Dig into how this works.
 
 app.get('/', (req, res) =>{
-    res.sendFile(path.join(__dirname, 'index.html'));
+    res.sendFile(path.join(__dirname, 'Develop/public/index.html'));
 });
+//Above get request calls for 
 
 app.get('/api/notes', (req, res) =>{
     fs.readFile(path.join(__dirname, '/Develop/db/db.json'), (err, data) => {
         if (err) throw error
         return res.json(JSON.parse(data));
-    });
-    // Add error handling here.
-});
+})});
 // Get is retreving items.
 
 app.post('/', (req, res) =>{

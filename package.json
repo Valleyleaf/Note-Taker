@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "devStart": "nodemon ./Develop/public/assets/js/server.js"
+    "start": "node server",
+    "devStart": "nodemon server"
   },
   "keywords": [],
   "author": "",
