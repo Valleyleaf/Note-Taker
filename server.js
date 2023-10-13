@@ -1,27 +1,28 @@
-// console.log('hello world')
-
+//Const Library goes here
 const express = require('express');
 const app = express();
 const path = require('path');
 const fs = require('fs');
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 
 app.use(express.static(path.join(__dirname, 'Develop/public')));
 
 app.use(express.json());
-//Above parses JSON request. Dig into how this works.
+//Above parses JSON request. Dig into how this works more.
 
 app.get('/', (req, res) =>{
+    console.log('hit index.js')
     res.sendFile(path.join(__dirname, 'Develop/public/index.html'));
 });
 //Above get request calls for 
 
 app.get('/api/notes', (req, res) =>{
-    fs.readFile(path.join(__dirname, '/Develop/db/db.json'), (err, data) => {
+    console.log('hit db.json')
+    fs.sendFile(path.join(__dirname, '/Develop/db/db.json'), (err, data) => {
         if (err) throw error
         return res.json(JSON.parse(data));
 })});
-// Get is retreving items.
+// Get is retreving items. If the function can't grab the file. It will crash and provide an error in the console.
 
 app.post('/', (req, res) =>{
     fs.writeFile(path.join(__dirname, 'index.html'));
