@@ -2,10 +2,39 @@
 
 const express = require('express')
 const app = express()
+const fs = require('fs')
+const PORT = 3001;
 
-app.listen(3000)
 
-app.get('./', (req, res) =>{
-    console.log('Confirmed line 9')
-    res.sendfILE(path.join(__dirname, 'index.html'))
+
+app.get('/', (req, res) =>{
+    res.sendFile(path.join(__dirname, 'index.html'));
 });
+
+app.get('/api/notes', (req, res) =>{
+    fs.readFile(path.join(__dirname, '/Develop/db/db.json'), (err, data) => {
+        if (err) throw error
+        return res.json(JSON.parse(data));
+    });
+    // Add error handling here.
+});
+// Get is retreving items.
+
+app.post('/', (req, res) =>{
+    fs.writeFile(path.join(__dirname, 'index.html'));
+});
+// post is creating items. Req body is needed.
+
+// :id
+app.delete('/', (req, res) =>{
+    // We want to read from db. Using fs.readFile(Path to db).
+    // if/else if we get data or if we get nothing.
+    // if no error, parse and return data using JSON.
+    // write logic to delete returned data.
+    // writeFile update to db removing the deleted data.
+});
+
+//Get Push, Post and Delete are concepts for you to dig into.
+
+// Use listen at the bottom. It is simular to a return in that sense.
+app.listen(3001);
