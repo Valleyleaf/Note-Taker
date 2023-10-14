@@ -12,21 +12,29 @@ app.use(express.static(path.join(__dirname, 'Develop/public')));
 app.use(express.json());
 //Above parses JSON request. Dig into how this works more.
 
+
+// Below are the two get requests for pulling index and notes .html. I also added error responses to be fancy.
 app.get('/', (req, res) =>{
-    console.log('hit index.html')
-    res.sendFile(path.join(__dirname, 'Develop/public/index.html'));
+    try {
+        res.sendFile(path.join(__dirname, 'Develop/public/index.html'));
+
+    } catch (err) {
+        response.status(500).send('No response from server.')
+    }
 });
 
 app.get('/notes', (req, res) =>{
-    console.log('hit notes.html')
-    res.sendFile(path.join(__dirname, 'Develop/public/notes.html'));
+    try {
+        res.sendFile(path.join(__dirname, 'Develop/public/notes.html'));
+
+    } catch (err) {
+        response.status(500).send('No response from server.')
+    }
 });
 
-// Why did we name this api. Button does not bring us here. Modify html asset?
-// app.get('/notes', (req, res) => res.json(noteData));
-
 // Learning note: You need to handle both front-end and back-end when dealing with back-end that has visuals outside the console. First get displays html.
-// second get sets up the back-end.
+// second get sets up the back-end. //New note. Is the above true? potentially but not an absolute.
+
 
 
 app.delete('/', (req, res) =>{
