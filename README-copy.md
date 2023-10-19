@@ -24,9 +24,9 @@ WHEN I open the Note Taker DONE
 THEN I am presented with a landing page with a link to a notes page DONE
 WHEN I click on the link to the notes page DONE
 THEN I am presented with a page with existing notes listed in the left-hand column, plus empty fields to enter a new note title and the note’s text in the right-hand column DONE
-WHEN I enter a new note title and the note’s text
-THEN a Save icon appears in the navigation at the top of the page
-WHEN I click on the Save icon
+WHEN I enter a new note title and the note’s text DONE
+THEN a Save icon appears in the navigation at the top of the page DONE
+WHEN I click on the Save icon DONE
 THEN the new note I have entered is saved and appears in the left-hand column with the other existing notes
 WHEN I click on an existing note in the list in the left-hand column
 THEN that note appears in the right-hand column
