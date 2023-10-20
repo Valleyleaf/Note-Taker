@@ -49,6 +49,7 @@ const deleteNote = (id) =>
       'Content-Type': 'application/json',
     },
   });
+  // When this is used. It sends http://localhost:3001/api/notes/undefined in my console. undefined must be id.
 
 const renderActiveNote = () => {
   hide(saveNoteBtn);
@@ -66,10 +67,18 @@ const renderActiveNote = () => {
   }
 };
 
+// const generateid = () =>{
+//   return Math.floor((1 + Math.random()) * 0x10000)
+//   .toString(16)
+//   .substring(1);
+// }
+
 const handleNoteSave = () => {
+  // const note_id = generateid()
   const newNote = {
     title: noteTitle.value,
     text: noteText.value,
+    // id: note_id
   };
   saveNote(newNote).then(() => {
     getAndRenderNotes();
@@ -94,6 +103,7 @@ const handleNoteDelete = (e) => {
     renderActiveNote();
   });
 };
+// This renders the notes after one has been deleted? Yes.
 
 // Sets the activeNote and displays it
 const handleNoteView = (e) => {

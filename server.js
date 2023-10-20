@@ -45,12 +45,18 @@ app.post('/api/notes', (req, res) => {
     })
 })
 
-
 // Using post to express to api/notes. Need to figure out what api/notes refers to. Probably in index.js
 // Can't get this to work for some reason. I need help with fileSystem. Ask Kevin/Toua.
 
 app.delete('/', (req, res) =>{
     // Do this if I have extra time.
+    // fs.readFile('./Develop/db/db.json', (err, data) => {
+    //     if (err){
+    //         res.status(500).json('Error occurred while deleting note.');
+    //     }else{
+
+    //     }
+    // })
     // We want to read from db. Using fs.readFile(Path to db).
     // if/else if we get data or if we get nothing.
     // if no error, parse and return data using JSON.
