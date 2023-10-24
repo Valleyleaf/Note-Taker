@@ -55,21 +55,16 @@ const deleteNote = (id) =>
 
 const renderActiveNote = () => {
   hide(saveNoteBtn);
-
   if (activeNote.id) {
     noteTitle.setAttribute('readonly', true);
     noteText.setAttribute('readonly', true);
-    // noteId.setAttribute('readonly', true);
     noteTitle.value = activeNote.title;
     noteText.value = activeNote.text;
-    // noteId.value = activeNote.id;
   } else {
     noteTitle.removeAttribute('readonly');
     noteText.removeAttribute('readonly');
-    // noteId.removeAttribute('readonly');
     noteTitle.value = '';
     noteText.value = '';
-    // noteId.value = '';
   }
 };
 // Added noteId to above function. Above would be function to show active note. How is this called?
@@ -78,7 +73,6 @@ const handleNoteSave = () => {
   const newNote = {
     title: noteTitle.value,
     text: noteText.value,
-    // id: noteId.value
   };
   saveNote(newNote).then(() => {
     getAndRenderNotes();
@@ -113,7 +107,6 @@ const handleNoteView = (e) => {
   e.preventDefault();
   activeNote = JSON.parse(e.target.parentElement.getAttribute('data-note'));
   renderActiveNote();
-  // console.log('GET NOTES HERE')
 };
 
 // Sets the activeNote to and empty object and allows the user to enter a new note
