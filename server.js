@@ -81,20 +81,16 @@ app.delete('/api/notes/:id', (req, res) =>{
             deleteNote = deleteNote.filter( note => note.id !== req.params.id)
             fs.writeFile('./Develop/db/db.json', JSON.stringify(deleteNote, null, 4), (err) => {
                 if (err) {
-                    res.status(500).json('Error occurred while saving.');
+                    res.status(500).json('Error occurred while deleting.');
                 } else {
-                  res.json('Note db saved');
+                  return;
                 }
               });
+              res.json(deleteNote);
             // write to the db using fa
             // use JSON.stringify
         }
     })
-    // We want to read from db. Using fs.readFile(Path to db).
-    // if/else if we get data or if we get nothing.
-    // if no error, parse and return data using JSON.
-    // write logic to delete returned data.
-    // writeFile update to db removing the deleted data.
 });
 
 // Use listen at the bottom. It is simular to a return in that sense.
