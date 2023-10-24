@@ -5,22 +5,23 @@ const fs = require('fs');
 const PORT = process.env.PORT || 3001;
 // Used this video for reference: https://www.youtube.com/watch?v=ENrzD9HAZK4&t=653s
 
-app.use(express.static(path.join(__dirname, '/Develop/public')));
+app.use(express.static(path.join(__dirname, '/public')));
+// The above ensures that all files server to the user on the front-end is from my public directory.
 
 app.use(express.json());
 //Above parses JSON request. Dig into how this works more.
 
 app.get('/', (req,res)=>{
-    res.sendFile(path.join(__dirname, '/Develop/public/index.html'))    
+    res.sendFile(path.join(__dirname, '/public/index.html'))    
 })
 
+
 app.get('/notes', (req, res) =>{
-    res.sendFile(path.join(__dirname, '/Develop/public/notes.html'));
+    res.sendFile(path.join(__dirname, '/public/notes.html'));
 });
 
-
 app.get('/api/notes', (req, res) => {
-    fs.readFile('./Develop/db/db.json', (err, data) => {
+    fs.readFile('./db/db.json', (err, data) => {
         err ? console.log('error on 19'):res.json(JSON.parse(data));
     })
 })
@@ -44,7 +45,7 @@ let generateid = () =>{
 // Post is create. This function is responsible for creating the note on the back end. A benefit of this
 // is that we can add ID which does not need to be viewed by the user on the front end.
 app.post('/api/notes', (req, res) => {
-    fs.readFile('./Develop/db/db.json', (err, data) => {
+    fs.readFile('./db/db.json', (err, data) => {
         if (err){
             res.status(500).json('Error occurred while saving.');
         }else{
@@ -58,13 +59,14 @@ app.post('/api/notes', (req, res) => {
             }
             allNotes.push(newNote)
             // Above pushes newNote object into allNotes array which then gets written into db.json.
-            fs.writeFile('./Develop/db/db.json', JSON.stringify(allNotes, null, 4), (err) => {
+            fs.writeFile('./db/db.json', JSON.stringify(allNotes, null, 4), (err) => {
                 if (err) {
                     res.status(500).json('Error occurred while saving.');
                 } else {
-                  res.json('Note db saved');
+                  return;
                 }
               });
+              res.json('Note db saved');
         }
     })
 })
@@ -73,13 +75,13 @@ app.post('/api/notes', (req, res) => {
 
 app.delete('/api/notes/:id', (req, res) =>{
     // Do this if I have extra time.
-    fs.readFile('./Develop/db/db.json', (err, data) => {
+    fs.readFile('./db/db.json', (err, data) => {
         if (err){
             res.status(500).json('Error occurred while deleting note.');
         }else{
             let deleteNote = JSON.parse(data);
             deleteNote = deleteNote.filter( note => note.id !== req.params.id)
-            fs.writeFile('./Develop/db/db.json', JSON.stringify(deleteNote, null, 4), (err) => {
+            fs.writeFile('./db/db.json', JSON.stringify(deleteNote, null, 4), (err) => {
                 if (err) {
                     res.status(500).json('Error occurred while deleting.');
                 } else {
