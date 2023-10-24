@@ -12,7 +12,7 @@ app.use(express.json());
 //Above parses JSON request. Dig into how this works more.
 
 app.get('/', (req,res)=>{
-    res.sendFile(path.join(__dirname, '/public/index.html'))    
+    res.sendFile(path.join(__dirname, 'index.html'))    
 })
 
 
