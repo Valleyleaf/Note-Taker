@@ -20,20 +20,40 @@ app.get('/api/notes', (req, res) => {
     })
 })
 
+let generateid = () =>{
+    return Math.floor((1 + Math.random()) * 0x10000)
+    .toString(16)
+    .substring(1);
+  }
+  // Above function works. It generates an ID with 4 letters/numbers. How do I pass this to my db.JSON? 
+  // Added note.id to render ActiveNote. Added generateID function to generate id (Taken from previous excersise) 
+  // and added id to handleNoteSave. 
+//   Learning note: THIS TOOK A LONG TIME TO FIGURE OUT. YOU CAN NOT CALL A FUNCTION WITHIN A OBJECT?
+// TRIED TO ORIGINALLY DO LET NEWNOTE ={TITLE:ETC, TEXT:ETC, NEWID:GENERATEID()} BUT THIS DID NOT WORK.
+// RETURNED UNDEFINED? WHY.
+
+
+
 // Learning note: You need to handle both front-end and back-end when dealing with back-end that has visuals outside the console. First get displays html.
 // second get sets up the back-end. //New note. Is the above true? potentially but not an absolute.
-// Post is create
+// Post is create. This function is responsible for creating the note on the back end. A benefit of this
+// is that we can add ID which does not need to be viewed by the user on the front end.
 app.post('/api/notes', (req, res) => {
     fs.readFile('./Develop/db/db.json', (err, data) => {
         if (err){
             res.status(500).json('Error occurred while saving.');
         }else{
             let allNotes = JSON.parse(data)
+            let newNoteid = generateid()
             let newNote = {
                 title:req.body.title,
-                text:req.body.text
+                text:req.body.text,
+                noteId:newNoteid
+                // Note to self. body referes to body of HTML. title and text is the user input.
             }
+            console.log(newNote)
             allNotes.push(newNote)
+            // Above pushes newNote object into allNotes array which then gets written into db.json.
             fs.writeFile('./Develop/db/db.json', JSON.stringify(allNotes, null, 4), (err) => {
                 if (err) {
                     res.status(500).json('Error occurred while saving.');
@@ -44,9 +64,8 @@ app.post('/api/notes', (req, res) => {
         }
     })
 })
-
+// Above function. readFile
 // Using post to express to api/notes. Need to figure out what api/notes refers to. Probably in index.js
-// Can't get this to work for some reason. I need help with fileSystem. Ask Kevin/Toua.
 
 app.delete('/', (req, res) =>{
     // Do this if I have extra time.

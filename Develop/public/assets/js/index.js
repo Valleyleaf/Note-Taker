@@ -24,6 +24,8 @@ const hide = (elem) => {
 
 // activeNote is used to keep track of the note in the textarea
 let activeNote = {};
+// Declares activeNote but leaves it as a empty object. This is so that we can
+// add things such as title and text. Can I add ID here? verdict: no.
 
 const getNotes = () =>
   fetch('/api/notes', {
@@ -57,34 +59,35 @@ const renderActiveNote = () => {
   if (activeNote.id) {
     noteTitle.setAttribute('readonly', true);
     noteText.setAttribute('readonly', true);
+    // noteId.setAttribute('readonly', true);
     noteTitle.value = activeNote.title;
     noteText.value = activeNote.text;
+    // noteId.value = activeNote.id;
   } else {
     noteTitle.removeAttribute('readonly');
     noteText.removeAttribute('readonly');
+    // noteId.removeAttribute('readonly');
     noteTitle.value = '';
     noteText.value = '';
+    // noteId.value = '';
   }
 };
-
-// const generateid = () =>{
-//   return Math.floor((1 + Math.random()) * 0x10000)
-//   .toString(16)
-//   .substring(1);
-// }
+// Added noteId to above function. Above would be function to show active note. How is this called?
 
 const handleNoteSave = () => {
-  // const note_id = generateid()
   const newNote = {
     title: noteTitle.value,
     text: noteText.value,
-    // id: note_id
+    // id: noteId.value
   };
   saveNote(newNote).then(() => {
     getAndRenderNotes();
     renderActiveNote();
   });
 };
+// Above is the function that actually creates the new note. Keep this in mind when tracking your code.
+// Learning note: I need to add more notes and do a better job of breaking down code before I start touching it.
+// I am good at doing it but I am being lazy and not doing it. Be better and add notes to stuff future me.
 
 // Delete the clicked note
 const handleNoteDelete = (e) => {
@@ -110,6 +113,7 @@ const handleNoteView = (e) => {
   e.preventDefault();
   activeNote = JSON.parse(e.target.parentElement.getAttribute('data-note'));
   renderActiveNote();
+  // console.log('GET NOTES HERE')
 };
 
 // Sets the activeNote to and empty object and allows the user to enter a new note
@@ -125,6 +129,7 @@ const handleRenderSaveBtn = () => {
     show(saveNoteBtn);
   }
 };
+// Above hides buttons if they are not relevant based on user input.
 
 // Render the list of note titles
 const renderNoteList = async (notes) => {
